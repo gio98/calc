@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Pasticceria & Packaging</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
+    <style>
+    :root {
+        /* Modern Professional Color Palette */
+        --primary-color: #2563eb;
+        --primary-dark: #1e40af;
+        --primary-light: #3b82f6;
+        --secondary-color: #1e293b;
+        --secondary-light: #334155;
+        --accent-color: #10b981;
+        --accent-secondary: #f59e0b;
+        --bg-light: #f8fafc;
+        --bg-gradient-start: #f1f5f9;
+        --bg-gradient-end: #e2e8f0;
+        --text-dark: #0f172a;
+        --text-medium: #475569;
+        --text-light: #64748b;
+        --border-color: #e2e8f0;
+        --border-dark: #cbd5e1;
+        --shadow: 0 1px 3px 0 rgba(0,0,0,0.1), 0 1px 2px -1px rgba(0,0,0,0.1);
+        --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -2px rgba(0,0,0,0.1);
+        --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -4px rgba(0,0,0,0.1);
+        --shadow-xl: 0 20px 25px -5px rgba(0,0,0,0.1), 0 8px 10px -6px rgba(0,0,0,0.1);
+    }
+
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    body {
+        font-family: 'Inter', 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
+        background: linear-gradient(135deg, var(--bg-gradient-start) 0%, var(--bg-gradient-end) 100%);
+        min-height: 100vh;
+        color: var(--text-dark);
+        font-weight: 400;
+        line-height: 1.6;
+    }
+
+    /* Top Navbar */
+    .top-navbar {
+        background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
+        color: white;
+        padding: 0;
+        box-shadow: var(--shadow-lg);
+        position: sticky;
+        top: 0;
+        z-index: 1030;
+    }
+
+    .navbar-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1rem 2rem;
+        max-width: 100%;
+    }
+
+    .navbar-brand {
+        color: white !important;
+        font-size: 1.5rem;
+        font-weight: 700;
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        transition: transform 0.3s;
+    }
+
+    .navbar-brand:hover {
+        transform: scale(1.05);
+    }
+
+    .hamburger-btn {
+        display: none;
+        background: none;
+        border: none;
+        color: white;
+        font-size: 1.5rem;
+        cursor: pointer;
+        padding: 0.5rem;
+        transition: transform 0.3s;
+    }
+
+    .hamburger-btn:hover {
+        transform: rotate(90deg);
+    }
+
+    .user-menu {
+        display: flex;
+        align-items: center;
+        gap: 1.5rem;
+    }
+
+    .user-info {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        color: white;
+        padding: 0.5rem 1rem;
+        background: rgba(255,255,255,0.1);
+        border-radius: 50px;
+        transition: background 0.3s;
+    }
+
+    .user-info:hover {
+        background: rgba(255,255,255,0.2);
+    }
+
+    .btn-link {
+        color: white !important;
+        text-decoration: none;
+        padding: 0.5rem 1rem;
+        border-radius: 8px;
+        transition: all 0.3s;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-weight: 500;
+    }
+
+    .btn-link:hover {
+        background: rgba(255,255,255,0.15);
+        transform: translateY(-2px);
+    }
+
+    /* Sidebar */
+    .sidebar {
+        background: linear-gradient(180deg, var(--secondary-color) 0%, var(--secondary-light) 100%);
+        color: #fff;
+        min-height: calc(100vh - 70px);
+        padding: 2rem 0;
+        box-shadow: var(--shadow-lg);
+        transition: transform 0.3s ease-in-out;
+    }
+
+    .sidebar-header {
+        text-align: center;
+        padding: 1rem;
+        margin-bottom: 2rem;
+        border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .sidebar-header h5 {
+        color: white;
+        font-weight: 700;
+        letter-spacing: 2px;
+        font-size: 0.9rem;
+    }
+
+    .nav-link {
+        color: rgba(255,255,255,0.95) !important;
+        text-decoration: none;
+        padding: 1rem 1.5rem;
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        transition: all 0.3s;
+        border-left: 3px solid transparent;
+        font-weight: 600;
+        font-size: 0.95rem;
+    }
+
+    .nav-link:hover {
+        background: rgba(255,255,255,0.1);
+        color: white !important;
+        border-left-color: var(--accent-color);
+        padding-left: 2rem;
+        transform: translateX(4px);
+    }
+
+    .nav-link.active {
+        background: linear-gradient(90deg, var(--primary-color) 0%, var(--primary-light) 100%);
+        color: white !important;
+        border-left-color: var(--accent-color);
+        box-shadow: var(--shadow-md);
+    }
+
+    .nav-link i {
+        font-size: 1.2rem;
+        width: 24px;
+        text-align: center;
+    }
+
+    /* Content */
+    .content-wrapper {
+        margin-top: 0;
+    }
+
+    .content {
+        padding: 2rem;
+        animation: fadeIn 0.5s;
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Cards */
+    .card {
+        border: 1px solid var(--border-color);
+        border-radius: 16px;
+        box-shadow: var(--shadow);
+        transition: all 0.3s ease;
+        background: white;
+        overflow: hidden;
+    }
+
+    .card:hover {
+        box-shadow: var(--shadow-lg);
+        transform: translateY(-2px);
+        border-color: var(--border-dark);
+    }
+
+    .card-header {
+        background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-light) 100%);
+        color: white;
+        font-weight: 600;
+        border: none;
+        padding: 1.25rem;
+    }
+
+    /* Buttons */
+    .btn-primary {
+        background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-light) 100%);
+        border: none;
+        padding: 0.75rem 1.5rem;
+        border-radius: 10px;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 6px rgba(37, 99, 235, 0.25);
+        color: white;
+    }
+
+    .btn-primary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 16px rgba(37, 99, 235, 0.35);
+        background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary-color) 100%);
+    }
+
+    .page-header {
+        background: white;
+        padding: 1.5rem;
+        border-radius: 12px;
+        box-shadow: var(--shadow);
+        margin-bottom: 2rem;
+    }
+
+    .page-header h1 {
+        color: var(--primary-color);
+        font-weight: 700;
+        margin-bottom: 0.5rem;
+    }
+
+    /* Responsive */
+    @media (min-width: 769px) {
+        .hamburger-btn {
+            display: none !important;
+        }
+        
+        .sidebar {
+            position: relative;
+            transform: translateX(0) !important;
+        }
+    }
+    
+    @media (max-width: 768px) {
+        .hamburger-btn {
+            display: block !important;
+        }
+
+        .sidebar {
+            position: fixed;
+            left: 0;
+            top: 70px;
+            width: 280px;
+            transform: translateX(-100%);
+            z-index: 1020;
+            height: calc(100vh - 70px);
+            overflow-y: auto;
+            box-shadow: 2px 0 10px rgba(0,0,0,0.3);
+        }
+
+        .sidebar.show {
+            transform: translateX(0);
+        }
+
+        .sidebar-overlay {
+            display: none;
+            position: fixed;
+            top: 70px;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.6);
+            z-index: 1010;
+            backdrop-filter: blur(2px);
+        }
+
+        .sidebar-overlay.show {
+            display: block;
+        }
+
+        .content {
+            padding: 1rem;
+            width: 100%;
+        }
+
+        .navbar-container {
+            padding: 1rem;
+        }
+
+        .user-menu {
+            gap: 0.5rem;
+        }
+
+        .user-info span {
+            display: none;
+        }
+        
+        .user-info {
+            padding: 0.5rem;
+        }
+
+        .btn-link span {
+            display: none;
+        }
+
+        .btn-link {
+            padding: 0.5rem;
+        }
+    }
+
+    @media (max-width: 576px) {
+        .navbar-brand span {
+            display: none;
+        }
+    }
+
+    ::-webkit-scrollbar {
+        width: 8px;
+        height: 8px;
+    }
+
+    ::-webkit-scrollbar-track {
+        background: #f1f1f1;
+    }
+
+    ::-webkit-scrollbar-thumb {
+        background: var(--primary-color);
+        border-radius: 4px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+        background: var(--primary-dark);
+    }
+    </style>
+</head>
+<body>
+    <!-- Top Navbar -->
+    <nav class="top-navbar">
+        <div class="navbar-container">
+            <div class="d-flex align-items-center gap-3">
+                <button class="hamburger-btn" aria-label="Toggle menu">
+                    <i class="bi bi-list"></i>
+                </button>
+                <a href="#" class="navbar-brand">
+                    <i class="bi bi-box-seam"></i>
+                    <span>Pasticceria & Packaging</span>
+                </a>
+            </div>
+            <div class="user-menu">
+                <a href="#" class="btn-link position-relative">
+                    <i class="bi bi-bell" style="font-size: 1.3rem;"></i>
+                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                        3
+                        <span class="visually-hidden">notifiche non lette</span>
+                    </span>
+                </a>
+                <div class="user-info">
+                    <i class="bi bi-person-circle" style="font-size: 1.5rem;"></i>
+                    <span>Mario Rossi</span>
+                </div>
+                <a href="#" class="btn-link">
+                    <i class="bi bi-gear"></i>
+                    <span>Profilo</span>
+                </a>
+                <a href="#" class="btn-link">
+                    <i class="bi bi-box-arrow-right"></i>
+                    <span>Logout</span>
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container-fluid content-wrapper">
+        <div class="row">
+            <!-- Sidebar -->
+            <div class="col-md-3 col-lg-2 sidebar">
+                <div class="sidebar-header">
+                    <h5>MENU</h5>
+                </div>
+                <ul class="nav flex-column">
+                    <li class="nav-item">
+                        <a href="#" class="nav-link active">
+                            <i class="bi bi-house-door"></i>
+                            <span>Dashboard</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">
+                            <i class="bi bi-file-earmark-text"></i>
+                            <span>Preventivi</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">
+                            <i class="bi bi-cart"></i>
+                            <span>I miei ordini</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            
+            <!-- Main Content -->
+            <div class="col-md-9 col-lg-10 content">
+                <div class="page-header">
+                    <h1><i class="bi bi-speedometer2 me-2"></i>Benvenuto, Mario Rossi!</h1>
+                    <p class="text-muted">Panoramica del tuo account e delle tue attività</p>
+                </div>
+                
+                <!-- Statistiche -->
+                <div class="row g-4 mb-4">
+                    <div class="col-md-6 col-lg-3">
+                        <div class="card border-0 shadow-sm">
+                            <div class="card-body text-center">
+                                <div class="mb-3">
+                                    <i class="bi bi-cart-check" style="font-size: 2.5rem; color: #667eea;"></i>
+                                </div>
+                                <h3 class="mb-0" style="color: #667eea;">24</h3>
+                                <p class="text-muted mb-0">Ordini Totali</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-3">
+                        <div class="card border-0 shadow-sm">
+                            <div class="card-body text-center">
+                                <div class="mb-3">
+                                    <i class="bi bi-clock-history" style="font-size: 2.5rem; color: #f093fb;"></i>
+                                </div>
+                                <h3 class="mb-0" style="color: #f093fb;">5</h3>
+                                <p class="text-muted mb-0">In Attesa</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-3">
+                        <div class="card border-0 shadow-sm">
+                            <div class="card-body text-center">
+                                <div class="mb-3">
+                                    <i class="bi bi-check-circle" style="font-size: 2.5rem; color: #4facfe;"></i>
+                                </div>
+                                <h3 class="mb-0" style="color: #4facfe;">16</h3>
+                                <p class="text-muted mb-0">Approvati</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-3">
+                        <div class="card border-0 shadow-sm">
+                            <div class="card-body text-center">
+                                <div class="mb-3">
+                                    <i class="bi bi-currency-euro" style="font-size: 2.5rem; color: #43e97b;"></i>
+                                </div>
+                                <h3 class="mb-0" style="color: #43e97b;">€12.450</h3>
+                                <p class="text-muted mb-0">Totale Speso</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row g-4">
+                    <!-- Azioni Rapide -->
+                    <div class="col-lg-8">
+                        <div class="card">
+                            <div class="card-header">
+                                <h5 class="mb-0"><i class="bi bi-lightning me-2"></i>Azioni Rapide</h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="row g-3">
+                                    <div class="col-md-6">
+                                        <a href="#" class="btn btn-primary w-100 p-3">
+                                            <i class="bi bi-plus-circle me-2" style="font-size: 1.5rem;"></i>
+                                            <strong>Nuovo Preventivo</strong>
+                                        </a>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <a href="#" class="btn btn-outline-primary w-100 p-3">
+                                            <i class="bi bi-cart me-2" style="font-size: 1.5rem;"></i>
+                                            <strong>I Miei Ordini</strong>
+                                        </a>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <a href="#" class="btn btn-outline-secondary w-100 p-3">
+                                            <i class="bi bi-person me-2" style="font-size: 1.5rem;"></i>
+                                            <strong>Profilo</strong>
+                                        </a>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <a href="#" class="btn btn-outline-warning w-100 p-3">
+                                            <i class="bi bi-bell me-2" style="font-size: 1.5rem;"></i>
+                                            <strong>Notifiche</strong>
+                                            <span class="badge bg-danger ms-2">3</span>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Ultimi Ordini -->
+                    <div class="col-lg-4">
+                        <div class="card">
+                            <div class="card-header d-flex justify-content-between align-items-center">
+                                <h5 class="mb-0"><i class="bi bi-clock-history me-2"></i>Ultimi Ordini</h5>
+                                <a href="#" class="btn btn-sm btn-outline-primary">Vedi tutti</a>
+                            </div>
+                            <div class="card-body p-0">
+                                <div class="list-group list-group-flush">
+                                    <!-- Ordine 1 -->
+                                    <a href="#" class="list-group-item list-group-item-action">
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <div>
+                                                <strong>Ordine #1024</strong><br>
+                                                <small class="text-muted">
+                                                    <i class="bi bi-calendar me-1"></i>
+                                                    28/10/2024
+                                                </small>
+                                            </div>
+                                            <div class="text-end">
+                                                <strong>€ 850,00</strong><br>
+                                                <span class="badge bg-success">
+                                                    <i class="bi bi-check-circle me-1"></i>
+                                                    Approved
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </a>
+                                    <!-- Ordine 2 -->
+                                    <a href="#" class="list-group-item list-group-item-action">
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <div>
+                                                <strong>Ordine #1023</strong><br>
+                                                <small class="text-muted">
+                                                    <i class="bi bi-calendar me-1"></i>
+                                                    25/10/2024
+                                                </small>
+                                            </div>
+                                            <div class="text-end">
+                                                <strong>€ 1.250,00</strong><br>
+                                                <span class="badge bg-primary">
+                                                    <i class="bi bi-box-seam me-1"></i>
+                                                    Shipped
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </a>
+                                    <!-- Ordine 3 -->
+                                    <a href="#" class="list-group-item list-group-item-action">
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <div>
+                                                <strong>Ordine #1022</strong><br>
+                                                <small class="text-muted">
+                                                    <i class="bi bi-calendar me-1"></i>
+                                                    20/10/2024
+                                                </small>
+                                            </div>
+                                            <div class="text-end">
+                                                <strong>€ 450,00</strong><br>
+                                                <span class="badge bg-warning">
+                                                    <i class="bi bi-clock me-1"></i>
+                                                    Pending
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </a>
+                                    <!-- Ordine 4 -->
+                                    <a href="#" class="list-group-item list-group-item-action">
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <div>
+                                                <strong>Ordine #1021</strong><br>
+                                                <small class="text-muted">
+                                                    <i class="bi bi-calendar me-1"></i>
+                                                    15/10/2024
+                                                </small>
+                                            </div>
+                                            <div class="text-end">
+                                                <strong>€ 2.100,00</strong><br>
+                                                <span class="badge bg-info">
+                                                    <i class="bi bi-credit-card me-1"></i>
+                                                    Invoiced
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </a>
+                                    <!-- Ordine 5 -->
+                                    <a href="#" class="list-group-item list-group-item-action">
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <div>
+                                                <strong>Ordine #1020</strong><br>
+                                                <small class="text-muted">
+                                                    <i class="bi bi-calendar me-1"></i>
+                                                    10/10/2024
+                                                </small>
+                                            </div>
+                                            <div class="text-end">
+                                                <strong>€ 680,00</strong><br>
+                                                <span class="badge bg-danger">
+                                                    <i class="bi bi-x-circle me-1"></i>
+                                                    Rejected
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+    // Hamburger Menu Toggle - Professional Responsive Navigation
+    document.addEventListener('DOMContentLoaded', function() {
+        const hamburger = document.querySelector('.hamburger-btn');
+        const sidebar = document.querySelector('.sidebar');
+        
+        // Crea overlay
+        let overlay = document.querySelector('.sidebar-overlay');
+        if (!overlay) {
+            overlay = document.createElement('div');
+            overlay.className = 'sidebar-overlay';
+            document.body.appendChild(overlay);
+        }
+
+        if (hamburger && sidebar) {
+            // Toggle menu
+            hamburger.addEventListener('click', function(e) {
+                e.stopPropagation();
+                sidebar.classList.toggle('show');
+                overlay.classList.toggle('show');
+                document.body.style.overflow = sidebar.classList.contains('show') ? 'hidden' : '';
+            });
+
+            // Chiudi con click su overlay
+            overlay.addEventListener('click', function() {
+                sidebar.classList.remove('show');
+                overlay.classList.remove('show');
+                document.body.style.overflow = '';
+            });
+
+            // Chiudi con ESC
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape' && sidebar.classList.contains('show')) {
+                    sidebar.classList.remove('show');
+                    overlay.classList.remove('show');
+                    document.body.style.overflow = '';
+                }
+            });
+
+            // Chiudi menu quando si ridimensiona la finestra a desktop
+            window.addEventListener('resize', function() {
+                if (window.innerWidth > 768) {
+                    sidebar.classList.remove('show');
+                    overlay.classList.remove('show');
+                    document.body.style.overflow = '';
+                }
+            });
+        }
+    });
+    </script>
+</body>
+</html>
